@@ -9,7 +9,7 @@ int PrintMovieNames(std::string &filename, std::vector<std::string> &rightTitles
     std::ifstream file(filename);
     if (!file.is_open()) {
         std::cerr << "error in open akas filename" << std::endl;
-        return -1;
+        return FILE_NOT_OPEN;
     }
 
     std::string first_line;
