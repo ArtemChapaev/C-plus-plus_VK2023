@@ -3,11 +3,7 @@
 #include <string>
 #include <vector>
 
-// this define may enable logging in loop
-// #define DEBUG 1
-
-const int TOP_AMOUNT = 10;
-const int MIN_VOTES = 1000;
+namespace ArgumentParsing {
 
 const std::string MIN_OPTION = "--max-minute-count";
 const std::string RATING_OPTION = "--title-ratings-path";
@@ -25,3 +21,5 @@ ConsoleArgs HandleArguments(int argc, char *argv[]);
 /// Parameters - input data.
 /// Return value - struct of ConsoleArgs with needed data.
 /// Check passed arguments, search needed data.
+
+}  // namespace ArgumentParsing

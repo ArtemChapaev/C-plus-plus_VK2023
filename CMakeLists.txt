@@ -7,6 +7,7 @@ include_directories(include)
 
 add_executable(imdb_top_searcher /
         src/main.cpp /
+        src/hadleArguments.cpp /
         src/pickTopMovies.cpp /
         src/printMovieNames.cpp /
         )

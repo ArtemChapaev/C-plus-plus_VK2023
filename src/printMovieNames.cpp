@@ -5,7 +5,7 @@
 #include <string>
 #include <vector>
 
-#include "utils.hpp"
+namespace TopFilmSelection {
 
 void PrintMovieNames(std::string &filename, std::vector<std::string> &topMovies) {
     std::ifstream file(filename);
@@ -56,3 +56,5 @@ void PrintMovieNames(std::string &filename, std::vector<std::string> &topMovies)
         std::cout << i + 1 << ") " << movieNames[i].name << std::endl;
     }
 }
+
+}  // namespace TopFilmSelection

@@ -2,11 +2,11 @@
 
 #include <algorithm>
 #include <fstream>
-#include <iostream>
+#include <stdexcept>
 #include <string>
 #include <vector>
 
-#include "utils.hpp"
+namespace TopFilmSelection {
 
 std::vector<std::string> PickTopMovies(const std::string &ratingsFilename, const std::string &basicsFilename,
                                        unsigned maxMinutes) {
@@ -144,3 +144,5 @@ void InsertRatingToTop(std::vector<TopMovie> &topMoviesWithRating, std::string &
 
     topMoviesWithRating.push_back(movieForInsert);
 }
+
+}  // namespace TopFilmSelection

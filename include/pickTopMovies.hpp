@@ -4,7 +4,10 @@
 #include <string>
 #include <vector>
 
-#include "utils.hpp"
+namespace TopFilmSelection {
+
+const int TOP_AMOUNT = 10;
+const int MIN_VOTES = 1000;
 
 struct TopMovie {
     std::string ID;
@@ -32,3 +35,5 @@ float SearchMovieRating(std::ifstream &file, std::string &movieID);
 void InsertRatingToTop(std::vector<TopMovie> &topMoviesWithRating, std::string &movieID, float movieRating);
 /// Parameters - vector of top pair "movieID-movieRating", info about current movie.
 /// Insert current movie into topMoviesWithRating. Keep topMoviesWithRating always in order.
+
+}  // namespace TopFilmSelection
