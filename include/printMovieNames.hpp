@@ -1,13 +1,16 @@
 #pragma once
 
 #include <string>
-#include <tuple>
 #include <vector>
 
-const int TOP_AMOUNT = 10;
+struct MovieName {
+    std::string name;
+    bool wasRuName;
+    bool wasOriginalName;
+};
+/// first flag show priority of ru-name, second - priority of original name.
 
-int PrintMovieNames(std::string &filename, std::vector<std::string> &topMovies);
+void PrintMovieNames(std::string &filename, std::vector<std::string> &topMovies);
 /// Parameters - filename with "akas", full vector with picked top movies.
-/// Return values - 0 or error.
-/// Read from file all "akas", for each "aka" compare title ID with titleID from topMovies.
+/// Read from file all "akas", for each "aka" compare ID with movieID from topMovies.
 /// Finally for every topMovie will be printed ru-name or primary name.

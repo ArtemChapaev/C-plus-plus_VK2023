@@ -5,19 +5,19 @@
 #include <string>
 #include <vector>
 
-int PrintMovieNames(std::string &filename, std::vector<std::string> &rightTitles) {
+#include "utils.hpp"
+
+void PrintMovieNames(std::string &filename, std::vector<std::string> &topMovies) {
     std::ifstream file(filename);
     if (!file.is_open()) {
-        std::cerr << "error in open akas filename" << std::endl;
-        return FILE_NOT_OPEN;
+        throw std::logic_error("error in open akas file\n");
     }
 
     std::string first_line;
     getline(file, first_line);
 
-    // first flag show priority of ru-name, second - priority of original name
-    std::vector<std::tuple<std::string, bool, bool>> movieNames;
-    movieNames.resize(TOP_AMOUNT);
+    std::vector<MovieName> movieNames;
+    movieNames.resize(topMovies.size());
 
     std::string titleID, ordering, title, region, language, types, attributes, isOriginalTitle;
 
@@ -31,24 +31,28 @@ int PrintMovieNames(std::string &filename, std::vector<std::string> &rightTitles
         getline(file, attributes, '\t');
         getline(file, isOriginalTitle);
 
-        for (int i = 0; i < TOP_AMOUNT; ++i) {
-            if (rightTitles[i] == titleID && !std::get<1>(movieNames[i])) {
+        // if last column is empty, data is bad
+        if (isOriginalTitle.empty()) {
+            throw std::logic_error("error in reading akas file\n");
+        }
+
+        for (int i = 0; i < topMovies.size(); ++i) {
+            // find needed name for condition of task
+            if (topMovies[i] == titleID && !movieNames[i].wasRuName) {
                 if (region == "RU" || language == "ru") {
-                    std::get<0>(movieNames[i]) = title;
-                    std::get<1>(movieNames[i]) = true;
+                    movieNames[i].name = title;
+                    movieNames[i].wasRuName = true;
                 } else if (std::stoi(isOriginalTitle)) {
-                    std::get<0>(movieNames[i]) = title;
-                    std::get<2>(movieNames[i]) = true;
-                } else if (!std::get<2>(movieNames[i])) {
-                    std::get<0>(movieNames[i]) = title;
+                    movieNames[i].name = title;
+                    movieNames[i].wasOriginalName = true;
+                } else if (!movieNames[i].wasOriginalName) {
+                    movieNames[i].name = title;
                 }
             }
         }
     }
 
-    for (int i = 0; i < TOP_AMOUNT; ++i) {
-        std::cout << i + 1 << ") " << std::get<0>(movieNames[i]) << std::endl;
+    for (int i = 0; i < movieNames.size(); ++i) {
+        std::cout << i + 1 << ") " << movieNames[i].name << std::endl;
     }
-
-    return 0;
 }

@@ -1,15 +1,13 @@
 cmake_minimum_required(VERSION 3.16)
-project(hw1)
+project(imdb_top_searcher)
 
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(include)
 
-add_executable(hw1 /
+add_executable(imdb_top_searcher /
         src/main.cpp /
-        src/utils.cpp /
-        src/pickTopTitles.cpp /
-        src/pickRightMovies.cpp /
+        src/pickTopMovies.cpp /
         src/printMovieNames.cpp /
         )
 
