@@ -40,21 +40,19 @@ std::vector<std::string> PickTopMovies(const std::string &ratingsFilename, const
         }
 
         if (topMoviesWithRating.size() == TOP_AMOUNT) {
-            // comparing last elem of topMoviesWithRating and movieRating of current movie
-            if (topMoviesWithRating[TOP_AMOUNT - 1].rating < movieRating) {
-                topMoviesWithRating.pop_back();
-            } else {
-                // if rating so little we skip this movie
+            // if rating so little we skip this movie
+            if (topMoviesWithRating[TOP_AMOUNT - 1].rating >= movieRating) {
                 continue;
             }
+            topMoviesWithRating.pop_back();
         }
         // insert current data into topMoviesWithRating
         InsertRatingToTop(topMoviesWithRating, movieID, movieRating);
     }
     // pick only ID from pair "movieID-movieRating"
     std::vector<std::string> topMovies;
-    for (int i = 0; i < topMoviesWithRating.size(); ++i) {
-        topMovies.push_back(topMoviesWithRating[i].ID);
+    for (const auto &topMovie : topMoviesWithRating) {
+        topMovies.push_back(topMovie.ID);
     }
 
     ratingsFile.close();
