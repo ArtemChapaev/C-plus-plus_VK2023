@@ -25,10 +25,10 @@ ConsoleArgs HandleArguments(int argc, char *argv[]);
 
 int main(int argc, char *argv[]) {
     try {
-        auto[maxMinutes, ratingsFilename, basicsFilename, akasFilename] = HandleArguments(argc, argv);
+        auto [maxMinutes, ratingsFilename, basicsFilename, akasFilename] = HandleArguments(argc, argv);
 
         std::vector<std::string> topMovies =
-                TopFilmSelection::PickTopMovies(ratingsFilename, basicsFilename, maxMinutes);
+            TopFilmSelection::PickTopMovies(ratingsFilename, basicsFilename, maxMinutes);
 
         TopFilmSelection::PrintMovieNames(akasFilename, topMovies);
     }
@@ -43,9 +43,9 @@ int main(int argc, char *argv[]) {
 ConsoleArgs HandleArguments(int argc, char *argv[]) {
     if (argc != 9) {
         throw std::logic_error(
-                "Wrong amount of arguments\n $ ./program --max-minute-count 160 --title-ratings-path "
-                "data/title.ratings.tsv --title-basics-path data/title.basics.tsv --title-akas-path "
-                "data/title.akas.tsv\n");
+            "Wrong amount of arguments\n $ ./program --max-minute-count 160 --title-ratings-path "
+            "data/title.ratings.tsv --title-basics-path data/title.basics.tsv --title-akas-path "
+            "data/title.akas.tsv\n");
     }
 
     ConsoleArgs arguments;

@@ -102,6 +102,11 @@ float SearchMovieRating(std::ifstream &file, std::string &movieID) {
         getline(file, averageRating, '\t');
         getline(file, numVotes);
 
+        // checking case of titleID = movieID + x. where x = "0" or other digit string
+        if (titleID.size() > movieID.size() && titleID.substr(movieID.size()) == movieID) {
+            continue;
+        }
+
         // checking case "movieID don't have rating" and case of file.eof()
         if (titleID > movieID || file.eof()) {
             return 0;
