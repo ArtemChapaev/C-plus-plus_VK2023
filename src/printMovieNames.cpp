@@ -7,7 +7,7 @@
 
 namespace TopFilmSelection {
 
-void PrintMovieNames(std::string &filename, std::vector<std::string> &topMovies) {
+void PrintMovieNames(const std::string &filename, const std::vector<std::string> &topMovies) {
     std::ifstream file(filename);
     if (!file.is_open()) {
         throw std::logic_error("error in open akas file\n");
@@ -43,10 +43,12 @@ void PrintMovieNames(std::string &filename, std::vector<std::string> &topMovies)
     for (int i = 0; i < movieNames.size(); ++i) {
         std::cout << i + 1 << ") " << movieNames[i].name << std::endl;
     }
+
+    file.close();
 }
 
-void FindMovieName(std::vector<std::string> &topMovies, std::vector<MovieName> &movieNames,
-                   AkasInfo titleInfo) {
+void FindMovieName(const std::vector<std::string> &topMovies, std::vector<MovieName> &movieNames,
+                   const AkasInfo titleInfo) {
     for (int i = 0; i < topMovies.size(); ++i) {
         // find needed name for condition of task
         if (topMovies[i] != titleInfo.titleID) {

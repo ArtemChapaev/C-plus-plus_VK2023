@@ -33,3 +33,22 @@
 **Ваш вариант:**
 Вывести русские названия (при наличии) 10 самых рейтинговых фильмов, длительность которых не 
 превышает числа минут, переданных в аргументах командной строки
+  
+Пример входных файлов можно посмотреть в файлах title.akas.tsv, title.basics.tsv и title.ratings.tsv. 
+Первый является файлом для ключа "--title-akas-path". Там хранятся столбцы "titleId", "ordering", "title", "region",
+"language", "types", "attributes", "isOriginalTitle".  
+Второй - для "--title-basics-path". Оттуда можно найти информацию по "tconst", "titleType", "primaryTitle",
+"originalTitle", "isAdult", "startYear", "endYear", "runtimeMinutes", "genres".  
+Последний - для "--title-akas-path". Там хранятся "tconst", "averageRating", "numVotes".  
+
+Пример выходных данных:
+1) The Silence of Swastika 
+2) GG - Gandhada Gudi  
+3) Побег из Шоушенка
+4) Jibon Theke Neya
+5) National Theatre Live: Prima Facie
+6) Рамаяна: Легенда о царевиче Раме
+7) Chaos
+8) Aguner Poroshmoni
+9) Dahnam
+10) Writer Padmabhushan 

@@ -34,8 +34,8 @@ std::vector<std::string> PickTopMovies(const std::string &ratingsFilename, const
 
         // find rating of current movie
         float movieRating = SearchMovieRating(ratingsFile, movieID);
-        // we check only relevant rating
-        if (!movieRating) {
+        // we check only relevant rating. here we also check machine inaccuracy of float
+        if (movieRating < EPSILON) {
             continue;
         }
 
@@ -60,7 +60,7 @@ std::vector<std::string> PickTopMovies(const std::string &ratingsFilename, const
     return topMovies;
 }
 
-std::string ReadMovieBasics(std::ifstream &file, unsigned maxMinutes) {
+std::string ReadMovieBasics(std::ifstream &file, const unsigned maxMinutes) {
     std::string titleID, titleType, primaryTitle, originalTitle, isAdult, startYear, endYear, runtimeMinutes,
         genres;
 
@@ -95,7 +95,7 @@ std::string ReadMovieBasics(std::ifstream &file, unsigned maxMinutes) {
     return titleID;
 }
 
-float SearchMovieRating(std::ifstream &file, std::string &movieID) {
+float SearchMovieRating(std::ifstream &file, const std::string &movieID) {
     std::string titleID, averageRating, numVotes;
     while (movieID != titleID) {
         getline(file, titleID, '\t');
@@ -129,7 +129,8 @@ float SearchMovieRating(std::ifstream &file, std::string &movieID) {
     return std::stof(averageRating);
 }
 
-void InsertRatingToTop(std::vector<TopMovie> &topMoviesWithRating, std::string &movieID, float movieRating) {
+void InsertRatingToTop(std::vector<TopMovie> &topMoviesWithRating, const std::string &movieID,
+                       const float movieRating) {
     // binary search of right place for insertion
     auto insertIter =
         std::lower_bound(topMoviesWithRating.begin(), topMoviesWithRating.end(), movieRating,

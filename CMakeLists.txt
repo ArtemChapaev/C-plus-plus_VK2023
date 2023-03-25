@@ -6,9 +6,10 @@ set(CMAKE_CXX_STANDARD 17)
 include_directories(include)
 
 add_executable(imdb_top_searcher /
-        src/main.cpp /
+        src/hadleArguments.cpp /
         src/pickTopMovies.cpp /
         src/printMovieNames.cpp /
+        src/main.cpp /
         )
 
 add_compile_options(-Wall -Wextra -pedantic -Werror)
