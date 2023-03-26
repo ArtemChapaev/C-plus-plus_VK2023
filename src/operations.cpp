@@ -22,29 +22,37 @@ void CatOperation::HandleEndOfInput() {
         throw std::logic_error("Wrong file\n");
     }
 
-    // handling of inputData
-    for (const auto &inputStr : inputData) {
-        if (nextOperation) {
-            nextOperation->AddInputData(inputStr);
-        } else {
-            std::cout << inputStr << std::endl;
+    // basic exception safety
+    try {
+        // handling of inputData
+        for (const auto &inputStr : inputData) {
+            if (nextOperation) {
+                nextOperation->AddInputData(inputStr);
+            } else {
+                std::cout << inputStr << std::endl;
+            }
         }
+
+        // handling of text from file
+        while (!file.eof()) {
+            std::string str;
+            getline(file, str);
+            if (nextOperation) {
+                nextOperation->AddInputData(str);
+            } else {
+                std::cout << str << std::endl;
+            }
+        }
+
+        if (nextOperation) {
+            nextOperation->HandleEndOfInput();
+        }
+    } catch (...) {
+        file.close();
+        throw;
     }
 
-    // handling of text from file
-    while (!file.eof()) {
-        std::string str;
-        getline(file, str);
-        if (nextOperation) {
-            nextOperation->AddInputData(str);
-        } else {
-            std::cout << str << std::endl;
-        }
-    }
-
-    if (nextOperation) {
-        nextOperation->HandleEndOfInput();
-    }
+    file.close();
 }
 
 void EchoOperation::AddInputData(const std::string &str) { inputData.push_back(str); }

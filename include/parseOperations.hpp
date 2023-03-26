@@ -17,7 +17,6 @@ std::shared_ptr<Operations::IOperation> HandleArguments(const int argc, char *ar
 /// Return value - shared_ptr for first operation in parsing.
 /// Check passed argument, parse it. Search operations, arguments and pipes. Create chain of operations
 
-
 std::shared_ptr<Operations::IOperation> ParseOperation(const std::string &str,
                                                        std::shared_ptr<Operations::IOperation> &lastOperation,
                                                        bool &requiredNextArgument);

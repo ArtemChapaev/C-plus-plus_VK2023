@@ -12,7 +12,8 @@ namespace OperatorParsing {
 std::shared_ptr<Operations::IOperation> HandleArguments(const int argc, char *argv[]) {
     if (argc != 2) {
         throw std::logic_error(
-            "Wrong amount of arguments\n$ ./text_processor '<operator> <argument>[ | <operator> <argument> ...]'\n");
+            "Wrong amount of arguments\n$ ./text_processor '<operator> <argument>[ | <operator> <argument> "
+            "...]'\n");
     }
     std::stringstream input;
     input << argv[1];
@@ -56,8 +57,8 @@ std::shared_ptr<Operations::IOperation> HandleArguments(const int argc, char *ar
 }
 
 std::shared_ptr<Operations::IOperation> ParseOperation(const std::string &str,
-                                           std::shared_ptr<Operations::IOperation> &lastOperation,
-                                           bool &requiredNextArgument) {
+                                                       std::shared_ptr<Operations::IOperation> &lastOperation,
+                                                       bool &requiredNextArgument) {
     std::shared_ptr<Operations::IOperation> currOperation;
 
     if (str == CAT_OPERATION) {
