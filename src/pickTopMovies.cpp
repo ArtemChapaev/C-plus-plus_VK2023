@@ -16,43 +16,50 @@ std::vector<std::string> PickTopMovies(const std::string &ratingsFilename, const
     }
     std::ifstream basicsFile(basicsFilename);
     if (!basicsFile.is_open()) {
+        ratingsFile.close();
         throw std::logic_error("error in open basics file\n");
     }
 
-    std::string first_line;
-    getline(ratingsFile, first_line);
-    getline(basicsFile, first_line);
+    std::vector<std::string> topMovies;
+    try {
+        std::string first_line;
+        getline(ratingsFile, first_line);
+        getline(basicsFile, first_line);
 
-    // vector of top-10 (TOP_AMOUNT) pair of "movieID-movieRating"
-    std::vector<TopMovie> topMoviesWithRating;
-    while (!ratingsFile.eof() && !basicsFile.eof()) {
-        std::string movieID = ReadMovieBasics(basicsFile, maxMinutes);
-        // we check only relevant movie from basics file
-        if (movieID.empty()) {
-            continue;
-        }
-
-        // find rating of current movie
-        float movieRating = SearchMovieRating(ratingsFile, movieID);
-        // we check only relevant rating. here we also check machine inaccuracy of float
-        if (movieRating < EPSILON) {
-            continue;
-        }
-
-        if (topMoviesWithRating.size() == TOP_AMOUNT) {
-            // if rating so little we skip this movie
-            if (topMoviesWithRating[TOP_AMOUNT - 1].rating >= movieRating) {
+        // vector of top-10 (TOP_AMOUNT) pair of "movieID-movieRating"
+        std::vector<TopMovie> topMoviesWithRating;
+        while (!ratingsFile.eof() && !basicsFile.eof()) {
+            std::string movieID = ReadMovieBasics(basicsFile, maxMinutes);
+            // we check only relevant movie from basics file
+            if (movieID.empty()) {
                 continue;
             }
-            topMoviesWithRating.pop_back();
+
+            // find rating of current movie
+            float movieRating = SearchMovieRating(ratingsFile, movieID);
+            // we check only relevant rating. here we also check machine inaccuracy of float
+            if (movieRating < EPSILON) {
+                continue;
+            }
+
+            if (topMoviesWithRating.size() == TOP_AMOUNT) {
+                // if rating so little we skip this movie
+                if (topMoviesWithRating[TOP_AMOUNT - 1].rating >= movieRating) {
+                    continue;
+                }
+                topMoviesWithRating.pop_back();
+            }
+            // insert current data into topMoviesWithRating
+            InsertRatingToTop(topMoviesWithRating, movieID, movieRating);
         }
-        // insert current data into topMoviesWithRating
-        InsertRatingToTop(topMoviesWithRating, movieID, movieRating);
-    }
-    // pick only ID from pair "movieID-movieRating"
-    std::vector<std::string> topMovies;
-    for (const auto &topMovie : topMoviesWithRating) {
-        topMovies.push_back(topMovie.ID);
+        // pick only ID from pair "movieID-movieRating"
+        for (const auto &topMovie : topMoviesWithRating) {
+            topMovies.push_back(topMovie.ID);
+        }
+    } catch (...) {
+        ratingsFile.close();
+        basicsFile.close();
+        throw;
     }
 
     ratingsFile.close();

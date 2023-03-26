@@ -13,35 +13,40 @@ void PrintMovieNames(const std::string &filename, const std::vector<std::string>
         throw std::logic_error("error in open akas file\n");
     }
 
-    std::string first_line;
-    getline(file, first_line);
+    try {
+        std::string first_line;
+        getline(file, first_line);
 
-    std::vector<MovieName> movieNames;
-    movieNames.resize(topMovies.size());
+        std::vector<MovieName> movieNames;
+        movieNames.resize(topMovies.size());
 
-    std::string titleID, ordering, title, region, language, types, attributes, isOriginalTitle;
+        std::string titleID, ordering, title, region, language, types, attributes, isOriginalTitle;
 
-    while (!file.eof()) {
-        getline(file, titleID, '\t');
-        getline(file, ordering, '\t');
-        getline(file, title, '\t');
-        getline(file, region, '\t');
-        getline(file, language, '\t');
-        getline(file, types, '\t');
-        getline(file, attributes, '\t');
-        getline(file, isOriginalTitle);
+        while (!file.eof()) {
+            getline(file, titleID, '\t');
+            getline(file, ordering, '\t');
+            getline(file, title, '\t');
+            getline(file, region, '\t');
+            getline(file, language, '\t');
+            getline(file, types, '\t');
+            getline(file, attributes, '\t');
+            getline(file, isOriginalTitle);
 
-        // if last column is empty, data is bad
-        if (isOriginalTitle.empty()) {
-            throw std::logic_error("error in reading akas file\n");
+            // if last column is empty, data is bad
+            if (isOriginalTitle.empty()) {
+                throw std::logic_error("error in reading akas file\n");
+            }
+
+            AkasInfo info{titleID, title, region, language, isOriginalTitle};
+            FindMovieName(topMovies, movieNames, info);
         }
 
-        AkasInfo info{titleID, title, region, language, isOriginalTitle};
-        FindMovieName(topMovies, movieNames, info);
-    }
-
-    for (int i = 0; i < movieNames.size(); ++i) {
-        std::cout << i + 1 << ") " << movieNames[i].name << std::endl;
+        for (int i = 0; i < movieNames.size(); ++i) {
+            std::cout << i + 1 << ") " << movieNames[i].name << std::endl;
+        }
+    } catch (...) {
+        file.close();
+        throw;
     }
 
     file.close();
