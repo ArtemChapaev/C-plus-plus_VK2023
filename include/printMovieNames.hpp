@@ -26,7 +26,7 @@ void PrintMovieNames(const std::string &filename, const std::vector<std::string>
 /// Finally for every topMovie will be printed ru-name or primary name.
 
 void FindMovieName(const std::vector<std::string> &topMovies, std::vector<MovieName> &movieNames,
-                   const AkasInfo titleInfo);
+                   const AkasInfo &titleInfo);
 /// Parameters - vector with picked top movies, vector for writing of movie's name and
 /// struct with info about current title.
 /// For current title compare ID with each movieID from topMovies.

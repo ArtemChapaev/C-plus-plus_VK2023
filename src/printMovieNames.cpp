@@ -53,7 +53,7 @@ void PrintMovieNames(const std::string &filename, const std::vector<std::string>
 }
 
 void FindMovieName(const std::vector<std::string> &topMovies, std::vector<MovieName> &movieNames,
-                   const AkasInfo titleInfo) {
+                   const AkasInfo &titleInfo) {
     for (int i = 0; i < topMovies.size(); ++i) {
         // find needed name for condition of task
         if (topMovies[i] != titleInfo.titleID) {
