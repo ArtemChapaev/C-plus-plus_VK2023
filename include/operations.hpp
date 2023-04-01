@@ -25,7 +25,7 @@ class CatOperation : public IOperation {
 
    private:
     std::vector<std::string> inputData;
-    std::string filename;
+    std::vector<std::string> fileData;
     std::shared_ptr<IOperation> nextOperation;
 };
 
@@ -37,7 +37,6 @@ class EchoOperation : public IOperation {
     void HandleEndOfInput() override;
 
    private:
-    std::vector<std::string> inputData;  // echo don't use it
     std::string text;
     std::shared_ptr<IOperation> nextOperation;
 };
@@ -51,7 +50,6 @@ class UniqOperation : public IOperation {
 
    private:
     std::vector<std::string> inputData;
-    std::string lineForProcessing;  // uniq don't use it
     std::shared_ptr<IOperation> nextOperation;
 };
 

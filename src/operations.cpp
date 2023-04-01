@@ -9,43 +9,20 @@ namespace Operations {
 
 void CatOperation::AddInputData(const std::string &str) { inputData.push_back(str); }
 
-void CatOperation::ProcessLine(const std::string &str) { filename = str; }
-
-void CatOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {
-    nextOperation = operation;
-}
-
-void CatOperation::HandleEndOfInput() {
-    // firstly check file. if it's wrong we don't handle inputData
-    std::ifstream file(filename);
+void CatOperation::ProcessLine(const std::string &str) {
+    // firstly check file
+    std::ifstream file(str);
     if (!file.is_open()) {
         throw std::logic_error("Wrong file\n");
     }
 
     // basic exception safety
     try {
-        // handling of inputData
-        for (const auto &inputStr : inputData) {
-            if (nextOperation) {
-                nextOperation->AddInputData(inputStr);
-            } else {
-                std::cout << inputStr << std::endl;
-            }
-        }
-
         // handling of text from file
         while (!file.eof()) {
             std::string str;
             getline(file, str);
-            if (nextOperation) {
-                nextOperation->AddInputData(str);
-            } else {
-                std::cout << str << std::endl;
-            }
-        }
-
-        if (nextOperation) {
-            nextOperation->HandleEndOfInput();
+            fileData.push_back(str);
         }
     } catch (...) {
         file.close();
@@ -55,7 +32,37 @@ void CatOperation::HandleEndOfInput() {
     file.close();
 }
 
-void EchoOperation::AddInputData(const std::string &str) { inputData.push_back(str); }
+void CatOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {
+    nextOperation = operation;
+}
+
+void CatOperation::HandleEndOfInput() {
+    if (nextOperation) {
+        // output inputData
+        for (const auto &inputStr : inputData) {
+            nextOperation->AddInputData(inputStr);
+        }
+
+        // output fileData
+        for (const auto &fileStr : fileData) {
+            nextOperation->AddInputData(fileStr);
+        }
+        nextOperation->HandleEndOfInput();
+    } else {
+        // output inputData
+        for (const auto &inputStr : inputData) {
+            std::cout << inputStr << std::endl;
+        }
+
+        // output fileData
+        for (const auto &fileStr : fileData) {
+            std::cout << fileStr << std::endl;
+        }
+    }
+}
+
+// echo don't use InputData
+void EchoOperation::AddInputData(const std::string &str) {}
 
 void EchoOperation::ProcessLine(const std::string &str) { text = str; }
 
@@ -74,7 +81,8 @@ void EchoOperation::HandleEndOfInput() {
 
 void UniqOperation::AddInputData(const std::string &str) { inputData.push_back(str); }
 
-void UniqOperation::ProcessLine(const std::string &str) { lineForProcessing = str; }
+// UniqOperation don't work with arguments
+void UniqOperation::ProcessLine(const std::string &str) {}
 
 void UniqOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {
     nextOperation = operation;
