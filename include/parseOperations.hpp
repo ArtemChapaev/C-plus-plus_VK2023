@@ -3,7 +3,7 @@
 #include <memory>
 #include <string>
 
-#include "operations.hpp"
+#include "IOperation.hpp"
 
 namespace OperatorParsing {
 

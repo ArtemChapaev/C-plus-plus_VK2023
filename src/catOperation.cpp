@@ -1,4 +1,4 @@
-#include "operations.hpp"
+#include "catOperation.hpp"
 
 #include <fstream>
 #include <iostream>
@@ -7,7 +7,9 @@
 
 namespace Operations {
 
-void CatOperation::AddInputData(const std::string &str) { inputData.push_back(str); }
+void CatOperation::AddInputData(const std::string &str) {
+    inputData.push_back(str);
+}
 
 void CatOperation::ProcessLine(const std::string &str) {
     // firstly check file
@@ -58,53 +60,6 @@ void CatOperation::HandleEndOfInput() {
         for (const auto &fileStr : fileData) {
             std::cout << fileStr << std::endl;
         }
-    }
-}
-
-// echo don't use InputData
-void EchoOperation::AddInputData(const std::string &str) {}
-
-void EchoOperation::ProcessLine(const std::string &str) { text = str; }
-
-void EchoOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {
-    nextOperation = operation;
-}
-
-void EchoOperation::HandleEndOfInput() {
-    if (nextOperation) {
-        nextOperation->AddInputData(text);
-        nextOperation->HandleEndOfInput();
-    } else {
-        std::cout << text << std::endl;
-    }
-}
-
-void UniqOperation::AddInputData(const std::string &str) { inputData.push_back(str); }
-
-// UniqOperation don't work with arguments
-void UniqOperation::ProcessLine(const std::string &str) {}
-
-void UniqOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {
-    nextOperation = operation;
-}
-
-void UniqOperation::HandleEndOfInput() {
-    std::string lastStr = "";
-
-    for (const auto &str : inputData) {
-        if (str != lastStr) {
-            if (nextOperation) {
-                nextOperation->AddInputData(str);
-            } else {
-                std::cout << str << std::endl;
-            }
-        }
-
-        lastStr = str;
-    }
-
-    if (nextOperation) {
-        nextOperation->HandleEndOfInput();
     }
 }
 

@@ -5,7 +5,9 @@
 #include <sstream>
 #include <string>
 
-#include "operations.hpp"
+#include "catOperation.hpp"
+#include "echoOperation.hpp"
+#include "uniqOperation.hpp"
 
 namespace OperatorParsing {
 
