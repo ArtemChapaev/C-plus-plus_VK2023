@@ -6,7 +6,6 @@
 
 namespace Operations {
 
-// echo don't use InputData
 void EchoOperation::AddInputData(const std::string &str) {}
 
 void EchoOperation::ProcessLine(const std::string &str) {

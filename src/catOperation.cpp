@@ -18,20 +18,12 @@ void CatOperation::ProcessLine(const std::string &str) {
         throw std::logic_error("Wrong file\n");
     }
 
-    // basic exception safety
-    try {
-        // handling of text from file
-        while (!file.eof()) {
-            std::string str;
-            getline(file, str);
-            fileData.push_back(str);
-        }
-    } catch (...) {
-        file.close();
-        throw;
+    // handling of text from file
+    while (!file.eof()) {
+        std::string str;
+        getline(file, str);
+        fileData.push_back(str);
     }
-
-    file.close();
 }
 
 void CatOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {

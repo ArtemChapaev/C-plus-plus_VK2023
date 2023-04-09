@@ -10,7 +10,6 @@ void UniqOperation::AddInputData(const std::string &str) {
     inputData.push_back(str);
 }
 
-// UniqOperation don't work with arguments
 void UniqOperation::ProcessLine(const std::string &str) {}
 
 void UniqOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {
