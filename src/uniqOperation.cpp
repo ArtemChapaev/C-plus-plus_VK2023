@@ -1,8 +1,6 @@
 #include "uniqOperation.hpp"
 
 #include <iostream>
-#include <memory>
-#include <string>
 
 namespace Operations {
 
@@ -12,7 +10,7 @@ void UniqOperation::AddInputData(const std::string &str) {
 
 void UniqOperation::ProcessLine(const std::string &str) {}
 
-void UniqOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {
+void UniqOperation::SetNextOperation(std::shared_ptr<IOperation> operation) {
     nextOperation = operation;
 }
 

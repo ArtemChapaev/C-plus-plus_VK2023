@@ -11,7 +11,7 @@ class CatOperation final : public IOperation {
    public:
     void AddInputData(const std::string &str) override;
     void ProcessLine(const std::string &str) override;
-    void SetNextOperation(const std::shared_ptr<IOperation> &operation) override;
+    void SetNextOperation(std::shared_ptr<IOperation> operation) override;
     void HandleEndOfInput() override;
 
    private:

@@ -1,8 +1,6 @@
 #include "echoOperation.hpp"
 
 #include <iostream>
-#include <memory>
-#include <string>
 
 namespace Operations {
 
@@ -12,7 +10,7 @@ void EchoOperation::ProcessLine(const std::string &str) {
     text = str;
 }
 
-void EchoOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {
+void EchoOperation::SetNextOperation(std::shared_ptr<IOperation> operation) {
     nextOperation = operation;
 }
 

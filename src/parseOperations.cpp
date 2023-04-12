@@ -1,6 +1,5 @@
 #include "parseOperations.hpp"
 
-#include <iostream>
 #include <memory>
 #include <sstream>
 #include <string>
@@ -17,7 +16,7 @@ const std::string UNIQ_OPERATION = "uniq";
 const std::string PIPE = "|";
 
 static std::shared_ptr<Operations::IOperation> ParseOperation(
-    const std::string &str, std::shared_ptr<Operations::IOperation> &lastOperation,
+    const std::string &str, const std::shared_ptr<Operations::IOperation> &lastOperation,
     bool &requiredNextArgument);
 /// Parameters - input lexeme for identifying, last operation in chain, bool value for checking next lexeme.
 /// Return value - shared_ptr for current operation.
@@ -47,6 +46,8 @@ std::shared_ptr<Operations::IOperation> HandleArguments(const int argc, char *ar
         // we check operation if it's needed
         if (isNeededOperation) {
             auto currOperation = ParseOperation(str, lastOperation, requiredNextArgument);
+            lastOperation = currOperation;
+
             isNeededOperation = false;
 
             if (isFirstLexeme) {
@@ -70,7 +71,7 @@ std::shared_ptr<Operations::IOperation> HandleArguments(const int argc, char *ar
 }
 
 static std::shared_ptr<Operations::IOperation> ParseOperation(
-    const std::string &str, std::shared_ptr<Operations::IOperation> &lastOperation,
+    const std::string &str, const std::shared_ptr<Operations::IOperation> &lastOperation,
     bool &requiredNextArgument) {
     std::shared_ptr<Operations::IOperation> currOperation;
 
@@ -92,7 +93,6 @@ static std::shared_ptr<Operations::IOperation> ParseOperation(
         lastOperation->SetNextOperation(currOperation);
     }
 
-    lastOperation = currOperation;
     return currOperation;
 }
 

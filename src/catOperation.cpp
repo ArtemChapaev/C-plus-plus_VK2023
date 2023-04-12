@@ -2,8 +2,6 @@
 
 #include <fstream>
 #include <iostream>
-#include <memory>
-#include <string>
 
 namespace Operations {
 
@@ -26,7 +24,7 @@ void CatOperation::ProcessLine(const std::string &str) {
     }
 }
 
-void CatOperation::SetNextOperation(const std::shared_ptr<IOperation> &operation) {
+void CatOperation::SetNextOperation(std::shared_ptr<IOperation> operation) {
     nextOperation = operation;
 }
 
